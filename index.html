@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Выбор дома</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    .house {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px;
+      width: 280px;
+      display: inline-block;
+      vertical-align: top;
+      background: white;
+    }
+    .house img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      width: 300px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover { background: #45a049; }
+    #status { margin-top: 15px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Выберите подходящие дома (можно несколько)</h2>
+  <input type="text" id="name" placeholder="Ваше имя (опционально)" />
+
+  <div id="houses-container">
+    <!-- Дома подгрузятся сюда -->
+  </div>
+
+  <br><br>
+  <button onclick="submitVote()">Проголосовать</button>
+  <div id="status"></div>
+
+  <script>
+    // 🔴 ЗАМЕНИ ЭТОТ URL НА ТОТ, ЧТО ТЫ ПОЛУЧИЛ В APPS SCRIPT!
+    const WEB_APP_URL = "https://script.google.com/macros/s/ВАШ_URL/exec";
+
+    async function loadHouses() {
+      try {
+        const res = await fetch(`${WEB_APP_URL}?action=getHouses`);
+        const houses = await res.json();
+        
+        const container = document.getElementById("houses-container");
+        container.innerHTML = houses.map(house => `
+          <label class="house">
+            <input type="checkbox" value="${house.id}">
+            <img src="${house.фото_url}" alt="${house.название}">
+            <div><strong>${house.название}</strong></div>
+            <div>💰 Сутки: ${house.цена_сутки} ₽ | 1 семья: ${house.цена_1} ₽</div>
+            <div>👨‍👩‍👧‍👦 3 семьи: ${house.цена_3} ₽</div>
+            <div>🗺️ До горы: ${house.расстояние} км</div>
+            <div>✨ ${house.особенности}</div>
+          </label>
+        `).join('');
+      } catch (err) {
+        console.error("Ошибка загрузки домов:", err);
+        document.getElementById("houses-container").innerHTML = "<p>Не удалось загрузить дома.</p>";
+      }
+    }
+
+    async function submitVote() {
+      const name = document.getElementById("name").value.trim() || "Аноним";
+      const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+        .map(el => el.value);
+
+      if (checked.length === 0) {
+        alert("Выберите хотя бы один дом!");
+        return;
+      }
+
+      try {
+        const res = await fetch(WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, houses: checked })
+        });
+        const result = await res.json();
+        
+        if (result.status === "ok") {
+          document.getElementById("status").innerText = "✅ Голос принят! Спасибо!";
+          document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+        }
+      } catch (err) {
+        document.getElementById("status").innerText = "❌ Ошибка отправки";
+        console.error(err);
+      }
+    }
+
+    loadHouses();
+  </script>
+</body>
+</html>
