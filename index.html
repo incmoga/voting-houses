@@ -78,6 +78,10 @@
 
   <br><br>
   <button onclick="submitVote()">Проголосовать</button>
+  <h3>Текущие результаты:</h3>
+<div id="results-container">
+  <p>Загрузка результатов...</p>
+</div>
   <div id="status"></div>
 
   <script>
@@ -146,10 +150,53 @@
   }
 
   loadHouses();
+    async function loadResults() {
+  try {
+    const res = await fetch(`${WEB_APP_URL}?action=getResults`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const results = await res.json();
+
+    const container = document.getElementById("results-container");
+    if (results.length === 0) {
+      container.innerHTML = "<p>Пока нет голосов.</p>";
+      return;
+    }
+
+    // Сортируем по убыванию голосов
+    results.sort((a, b) => b.голосов - a.голосов);
+
+    container.innerHTML = `
+      <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+          <tr>
+            <th style="text-align: left; border-bottom: 1px solid #ccc; padding: 6px;">Дом</th>
+            <th style="text-align: center; border-bottom: 1px solid #ccc; padding: 6px;">Голосов</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${results.map(r => `
+            <tr>
+              <td style="padding: 6px;">${r.название}</td>
+              <td style="text-align: center; padding: 6px;">${r.голосов}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  } catch (err) {
+    console.error("Ошибка загрузки итогов:", err);
+    document.getElementById("results-container").innerHTML = 
+      `<p style="color:red">❌ Не удалось загрузить итоги</p>`;
+  }
+}
+
+// Загружаем итоги при старте и после голосования
+loadResults();
 </script>
 </body>
 
 </html>
+
 
 
 
