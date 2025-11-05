@@ -6,10 +6,24 @@
   <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAA+vr/ABFmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgICAgICAAAAAAAAAgICAgECAgICAgICAAAAAgICAgIBAgICAgICAgIAAAICAgICAQEBAgICAgICAAICAgICAgECAgECAgECAQICAgICAgIBAgICAQIBAQECAgICAgICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgIBAgICAgICAgICAgICAgICAQEBAgICAgICAgICAgICAgECAgECAgIBAgICAgICAgIBAgICAQIBAgECAgICAAICAQICAQICAQIBAgICAAACAgEBAQICAgIBAgICAgAAAAICAgICAgICAgICAgAAAAAAAAICAgICAgICAAAAAPAPAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAPAPAAA=" rel="icon" type="image/x-icon">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Leaflet Measure CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.measure@3.0.0/dist/leaflet-measure.css" />
-<!-- Leaflet Measure JS -->
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.measure@3.0.0/dist/leaflet-measure.min.js"></script>
+  <!-- Leaflet Linear Measurement CSS -->
+<!-- 1. Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- 2. Leaflet.Draw CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+
+<!-- 3. Leaflet.MeasureControl CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.measurecontrol@1.1.0/leaflet.measurecontrol.min.css" />
+
+<!-- 4. Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- 5. Leaflet.Draw JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+<!-- 6. Leaflet.MeasureControl JS -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet.measurecontrol@1.1.0/leaflet.measurecontrol.min.js"></script>
   <title>Выбор дома</title>
   <style>
     body {
@@ -180,13 +194,12 @@ if (typeof L !== 'undefined') {
     }).addTo(map);
     
     // Добавляем кнопку измерения расстояния
-    L.control.measure({
-      position: 'topright', // кнопка в правом верхнем углу
-      primaryLengthUnit: 'kilometers',
-      secondaryLengthUnit: 'meters',
-      activeColor: '#1a73e8',
-      completedColor: '#333'
-    }).addTo(map);
+// Вариант 1: как опция карты (рекомендуется)
+const map = L.map('house-map', {
+  center: [53.15, 88.98],
+  zoom: 11,
+  measureControl: true  // ← вот так включается
+});
 
     // Добавляем маркеры
     houses.forEach(house => {
@@ -285,6 +298,7 @@ loadResults();
 </body>
 
 </html>
+
 
 
 
