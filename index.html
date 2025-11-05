@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Leaflet Linear Measurement CSS -->
+  <script src="
+https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.min.css
+" rel="stylesheet">
   <title>Выбор дома</title>
   <style>
     body {
@@ -176,6 +182,10 @@ if (typeof L !== 'undefined') {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    var myMap = L.map('mapElementId', options);
+var measureControl = new L.Control.Measure(options);
+measureControl.addTo(myMap);
+
     // Добавляем маркеры
     houses.forEach(house => {
       if (house.широта && house.долгота) {
@@ -273,6 +283,7 @@ loadResults();
 </body>
 
 </html>
+
 
 
 
