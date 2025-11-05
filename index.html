@@ -65,6 +65,42 @@
     color: #202124;
     margin-bottom: 10px;
   }
+
+    .results-box {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.results-title {
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #202124;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.result-count {
+  font-weight: bold;
+  color: #1a73e8;
+}
+  @media (max-width: 600px) {
+  .result-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .result-row span:last-child {
+    text-align: right;
+  }
+}
   </style>
 </head>
 <body>
@@ -166,23 +202,16 @@
     results.sort((a, b) => b.голосов - a.голосов);
 
     container.innerHTML = `
-      <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
-        <thead>
-          <tr>
-            <th style="text-align: left; border-bottom: 1px solid #ccc; padding: 6px;">Дом</th>
-            <th style="text-align: center; border-bottom: 1px solid #ccc; padding: 6px;">Голосов</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${results.map(r => `
-            <tr>
-              <td style="padding: 6px;">${r.название}</td>
-              <td style="text-align: center; padding: 6px;">${r.голосов}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    `;
+  <div class="results-box">
+    <div class="results-title">Рейтинг домов</div>
+    ${results.map(r => `
+      <div class="result-row">
+        <span>${r.название}</span>
+        <span class="result-count">${r.голосов} ${r.голосов === 1 ? 'голос' : r.голосов < 5 ? 'голоса' : 'голосов'}</span>
+      </div>
+    `).join('')}
+  </div>
+`;
   } catch (err) {
     console.error("Ошибка загрузки итогов:", err);
     document.getElementById("results-container").innerHTML = 
@@ -196,6 +225,7 @@ loadResults();
 </body>
 
 </html>
+
 
 
 
