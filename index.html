@@ -53,62 +53,72 @@
   <div id="status"></div>
 
   <script>
-    // 🔴 ЗАМЕНИ ЭТОТ URL НА ТОТ, ЧТО ТЫ ПОЛУЧИЛ В APPS SCRIPT!
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrMeJhIM7_Hq9viUzcu7KXAGdv1brBFlWfP7Wvmx2a6L71HvpXgmIk06zFruYZBpl-vg/exec";
+  // 🔴 ЗАМЕНИ НА СВОЙ URL (тот же самый!)
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrMeJhIM7_Hq9viUzcu7KXAGdv1brBFlWfP7Wvmx2a6L71HvpXgmIk06zFruYZBpl-vg/exec";
 
-    async function loadHouses() {
-      try {
-        const res = await fetch(`${WEB_APP_URL}?action=getHouses`);
-        const houses = await res.json();
-        
-        const container = document.getElementById("houses-container");
-        container.innerHTML = houses.map(house => `
-          <label class="house">
-            <input type="checkbox" value="${house.id}">
-            <img src="${house.фото_url}" alt="${house.название}">
-            <div><strong>${house.название}</strong></div>
-            <div>💰 Сутки: ${house.цена_сутки} ₽ | 1 семья: ${house.цена_1} ₽</div>
-            <div>👨‍👩‍👧‍👦 3 семьи: ${house.цена_3} ₽</div>
-            <div>🗺️ До горы: ${house.расстояние} км</div>
-            <div>✨ ${house.особенности}</div>
-          </label>
-        `).join('');
-      } catch (err) {
-        console.error("Ошибка загрузки домов:", err);
-        document.getElementById("houses-container").innerHTML = "<p>Не удалось загрузить дома.</p>";
-      }
-    }
-
-    async function submitVote() {
-      const name = document.getElementById("name").value.trim() || "Аноним";
-      const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
-        .map(el => el.value);
-
-      if (checked.length === 0) {
-        alert("Выберите хотя бы один дом!");
+  async function loadHouses() {
+    try {
+      const res = await fetch(`${WEB_APP_URL}?action=getHouses`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const houses = await res.json();
+      
+      const container = document.getElementById("houses-container");
+      if (houses.length === 0) {
+        container.innerHTML = "<p>Нет домов для голосования.</p>";
         return;
       }
 
-      try {
-        const res = await fetch(WEB_APP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, houses: checked })
-        });
-        const result = await res.json();
-        
-        if (result.status === "ok") {
-          document.getElementById("status").innerText = "✅ Голос принят! Спасибо!";
-          document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
-        }
-      } catch (err) {
-        document.getElementById("status").innerText = "❌ Ошибка отправки";
-        console.error(err);
-      }
+      container.innerHTML = houses.map(h => `
+        <label class="house">
+          <input type="checkbox" value="${h.id}">
+          <img src="${h.фото_url}" onerror="this.src='https://via.placeholder.com/300x150?text=Фото+недоступно'">
+          <div><strong>${h.название}</strong></div>
+          <div>💰 Сутки: ${h.цена_сутки || '—'} ₽ | 1 семья: ${h.цена_1 || '—'} ₽</div>
+          <div>👨‍👩‍👧‍👦 3 семьи: ${h.цена_томские || '—'} ₽</div>
+          <div>👨‍👩‍👧‍👦 1 семья: ${h.цена_крас || '—'} ₽</div>
+          <div>✨ ${h.особенности || ''}</div>
+          <div>🗺️ До горы: ${h.расстояние || '—'} км</div>
+        </label>
+      `).join('');
+    } catch (err) {
+      console.error("Ошибка загрузки домов:", err);
+      document.getElementById("houses-container").innerHTML = 
+        `<p style="color:red">❌ Ошибка: ${err.message}</p>`;
+    }
+  }
+
+  async function submitVote() {
+    const name = document.getElementById("name").value.trim() || "Аноним";
+    const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+      .map(el => el.value);
+
+    if (checked.length === 0) {
+      alert("Выберите хотя бы один дом!");
+      return;
     }
 
-    loadHouses();
-  </script>
+    const housesParam = encodeURIComponent(checked.join(","));
+    const url = `${WEB_APP_URL}?action=vote&name=${encodeURIComponent(name)}&houses=${housesParam}`;
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const result = await res.json();
+      if (result.status === "ok") {
+        document.getElementById("status").innerText = "✅ Голос принят! Спасибо!";
+        document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+      } else {
+        throw new Error("Сервер вернул ошибку");
+      }
+    } catch (err) {
+      document.getElementById("status").innerText = `❌ Ошибка: ${err.message}`;
+      console.error(err);
+    }
+  }
+
+  loadHouses();
+</script>
 </body>
 
 </html>
+
