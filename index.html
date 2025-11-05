@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAA+vr/ABFmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgICAgICAAAAAAAAAgICAgECAgICAgICAAAAAgICAgIBAgICAgICAgIAAAICAgICAQEBAgICAgICAAICAgICAgECAgECAgECAQICAgICAgIBAgICAQIBAQECAgICAgICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgIBAgICAgICAgICAgICAgICAQEBAgICAgICAgICAgICAgECAgECAgIBAgICAgICAgIBAgICAQIBAgECAgICAAICAQICAQICAQIBAgICAAACAgEBAQICAgIBAgICAgAAAAICAgICAgICAgICAgAAAAAAAAICAgICAgICAAAAAPAPAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAPAPAAA=" rel="icon" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <title>Выбор дома</title>
   <style>
     body {
@@ -103,12 +105,20 @@
     text-align: right;
   }
 }
+    #house-map {
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
   </style>
 </head>
 <body>
   <h2>Выберите подходящие дома (можно несколько)</h2>
   <input type="text" id="name" placeholder="Ваше имя (обязательно!)" />
-
+  <h3>Где находятся дома</h3>
+  <div id="house-map"></div>
   <div id="houses-container">
     <!-- Дома подгрузятся сюда -->
   </div>
@@ -150,6 +160,41 @@
           <div><a href="${h.авито_ссылка}" target="_blank" style="color: #0066cc; text-decoration: underline;">🔗 Посмотреть на Авито</a></div>
         </label>
       `).join('');
+      // --- Карта ---
+if (typeof L !== 'undefined') {
+  const mapContainer = document.getElementById('house-map');
+  if (mapContainer) {
+    // Очистим карту, если уже была
+    mapContainer.innerHTML = '';
+
+    // Создаём карту
+    const map = L.map('house-map').setView([52.57, 87.57], 12); // центр — твой регион
+
+    // Подложка OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Добавляем маркеры
+    houses.forEach(house => {
+      if (house.широта && house.долгота) {
+        const lat = parseFloat(house.широта);
+        const lng = parseFloat(house.долгота);
+        
+        if (!isNaN(lat) && !isNaN(lng)) {
+          const marker = L.marker([lat, lng]).addTo(map);
+          
+          // Попап с фото и названием
+          let popupContent = `<strong>${house.название}</strong>`;
+          if (house.фото_url) {
+            popupContent += `<br><img src="${house.фото_url}" width="150" style="border-radius: 6px; margin-top: 6px;">`;
+          }
+          marker.bindPopup(popupContent);
+        }
+      }
+    });
+  }
+}
     } catch (err) {
       console.error("Ошибка загрузки домов:", err);
       document.getElementById("houses-container").innerHTML = 
@@ -227,6 +272,7 @@ loadResults();
 </body>
 
 </html>
+
 
 
 
