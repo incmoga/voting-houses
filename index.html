@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAA+vr/ABFmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgICAgICAAAAAAAAAgICAgECAgICAgICAAAAAgICAgIBAgICAgICAgIAAAICAgICAQEBAgICAgICAAICAgICAgECAgECAgECAQICAgICAgIBAgICAQIBAQECAgICAgICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgIBAgICAgICAgICAgICAgICAgICAQEBAgICAgICAgICAgICAgECAgECAgIBAgICAgICAgIBAgICAQIBAgECAgICAAICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgAAAAICAgICAgICAgICAgAAAAAAAAICAgICAgICAAAAAPAPAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAPAPAAA=" rel="icon" type="image/x-icon">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.js"></script>
   <title>Выбор дома</title>
   <style>
     body {
@@ -91,6 +93,18 @@
       font-weight: bold;
       color: #1a73e8;
     }
+
+    .leaflet-control-measure {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    }
+    .leaflet-control-measure a {
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Im0zIDMgMTggMTgiLz48cGF0aCBkPSJNMTEgMTZINiIvPjxwYXRoIGQ9Ik0xNiAxMVY2Ii8+PHBhdGggZD0ibTE5IDMtNyA3Ii8+PHBhdGggZD0ibTIxIDYtOSA5Ii8+PHBhdGggZD0ibTMgMTkgNy03Ii8+PHBhdGggZD0ibTYgMjEgOS05Ii8+PC9zdmc+');
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    
     @media (max-width: 600px) {
       .result-row {
         flex-direction: column;
@@ -133,6 +147,8 @@
   <script>
     // 🔴 ОБЯЗАТЕЛЬНО ЗАМЕНИ НА СВОЙ URL ИЗ APPS SCRIPT (БЕЗ ПРОБЕЛОВ!)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrMeJhIM7_Hq9viUzcu7KXAGdv1brBFlWfP7Wvmx2a6L71HvpXgmIk06zFruYZBpl-vg/exec";
+
+    let map;
 
     // Загрузка домов и карты
     async function loadHouses() {
@@ -195,6 +211,19 @@
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+        // Добавляем инструмент измерения
+      L.control.measure({
+        position: 'topright',
+        primaryLengthUnit: 'meters',
+        secondaryLengthUnit: 'kilometers',
+        primaryAreaUnit: 'sqmeters',
+        activeColor: '#1a73e8',
+        completedColor: '#1a73e8',
+        localization: 'ru',
+        decPoint: ',',
+        thousandsSep: ' '
       }).addTo(map);
 
       houses.forEach(house => {
@@ -313,6 +342,7 @@
   </script>
 </body>
 </html>
+
 
 
 
