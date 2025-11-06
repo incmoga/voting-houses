@@ -3,40 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAA+vr/ABFmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgICAgICAAAAAAAAAgICAgECAgICAgICAAAAAgICAgIBAgICAgICAgIAAAICAgICAQEBAgICAgICAAICAgICAgECAgECAgECAQICAgICAgIBAgICAQIBAQECAgICAgICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgIBAgICAgICAgICAgICAgICAgICAQEBAgICAgICAgICAgICAgECAgECAgIBAgICAgICAgIBAgICAQIBAgECAgICAAICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgAAAAICAgICAgICAgICAgAAAAAAAAICAgICAgICAAAAAPAPAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAPAPAAA=" rel="icon" type="image/x-icon">
+  <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAA+vr/ABFmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgICAgICAAAAAAAAAgICAgECAgICAgICAAAAAgICAgIBAgICAgICAgIAAAICAgICAQEBAgICAgICAAICAgICAgECAgECAgECAQICAgICAgIBAgICAQIBAQECAgICAgICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgIBAgICAgICAgICAgICAgICAQEBAgICAgICAgICAgICAgECAgECAgIBAgICAgICAgIBAgICAQIBAgECAgICAAICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgAAAAICAgICAgICAgICAgAAAAAAAAICAgICAgICAAAAAPAPAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAPAPAAA=" rel="icon" type="image/x-icon">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Подключаем CSS для LinearMeasurement -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zakhar7/Leaflet-LinearMeasurement@master/dist/leaflet.linear.css" />
-  
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Подключаем JS для LinearMeasurement -->
-  <script src="https://cdn.jsdelivr.net/gh/zakhar7/Leaflet-LinearMeasurement@master/dist/leaflet.linear.js"></script>
-  
   <title>Выбор дома</title>
   <style>
+    /* Цветовые переменные для тем */
+    :root {
+      --bg: #f5f7fa;
+      --card-bg: white;
+      --text: #202124;
+      --text-secondary: #333;
+      --border: #e0e0e0;
+      --shadow: rgba(0,0,0,0.05);
+      --shadow-hover: rgba(0,0,0,0.1);
+      --button-bg: #1a73e8;
+      --button-hover: #0d5bb8;
+      --results-bg: white;
+      --results-border: #f0f0f0;
+      --link: #0066cc;
+    }
+
+    .dark-mode {
+      --bg: #121212;
+      --card-bg: #1e1e1e;
+      --text: #e0e0e0;
+      --text-secondary: #ccc;
+      --border: #333;
+      --shadow: rgba(0,0,0,0.2);
+      --shadow-hover: rgba(0,0,0,0.3);
+      --button-bg: #5a96f7;
+      --button-hover: #3a76d7;
+      --results-bg: #1e1e1e;
+      --results-border: #333;
+      --link: #64b5f6;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       padding: 20px;
-      background: #f5f7fa;
+      background: var(--bg);
+      color: var(--text);
       max-width: 1200px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     .house {
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 16px;
       margin: 16px 8px;
       width: 290px;
       display: inline-block;
       vertical-align: top;
-      background: white;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
+      background: var(--card-bg);
+      box-shadow: 0 2px 6px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
+
     .house:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px var(--shadow-hover);
     }
+
     .house img {
       width: 100%;
       height: 180px;
@@ -44,81 +76,70 @@
       border-radius: 8px;
       margin-bottom: 12px;
     }
+
     input[type="text"] {
       padding: 10px;
       width: 320px;
       font-size: 16px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border);
       border-radius: 8px;
       margin-bottom: 20px;
+      background: var(--card-bg);
+      color: var(--text);
     }
+
     button {
       padding: 12px 24px;
       font-size: 18px;
-      background: #1a73e8;
+      background: var(--button-bg);
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
+
     button:hover {
-      background: #0d5bb8;
+      background: var(--button-hover);
     }
+
     #status {
       margin-top: 20px;
       font-weight: bold;
       min-height: 24px;
     }
+
     h2, h3 {
-      color: #202124;
-      margin: 20px 0 10px;
+      color: var(--text);
+      margin-bottom: 10px;
     }
 
     .results-box {
-      background: white;
+      background: var(--results-bg);
       border-radius: 12px;
       padding: 16px;
       margin-top: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px var(--shadow);
     }
+
     .results-title {
       font-weight: bold;
       margin-bottom: 12px;
-      color: #202124;
+      color: var(--text);
     }
+
     .result-row {
       display: flex;
       justify-content: space-between;
       padding: 8px 0;
-      border-bottom: 1px solid #f0f0f0;
-      color: #333;
+      border-bottom: 1px solid var(--results-border);
+      color: var(--text-secondary);
     }
+
     .result-count {
       font-weight: bold;
-      color: #1a73e8;
+      color: var(--button-bg);
     }
-    
-    /* Стили для панели инструментов линейки */
-    .leaflet-draw-toolbar {
-      margin-top: 12px;
-    }
-    
-    .leaflet-draw-toolbar a {
-      background-color: #fff;
-      border-radius: 4px;
-    }
-    
-    .leaflet-draw-toolbar a:hover {
-      background-color: #f4f4f4;
-    }
-    
-    /* Стили для кнопки линейки */
-    .leaflet-linear-measure {
-      background: white;
-      border-radius: 4px;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-    }
-    
+
     @media (max-width: 600px) {
       .result-row {
         flex-direction: column;
@@ -128,44 +149,89 @@
         text-align: right;
       }
     }
+
     #house-map {
       width: 100%;
-      height: 350px;
+      height: 300px;
       border-radius: 12px;
       margin: 20px 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px var(--shadow);
+    }
+
+    /* Кнопка переключения темы */
+    #theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
+  <!-- Кнопка тёмного режима -->
+  <button id="theme-toggle">🌓</button>
+
   <h2>Выберите подходящие дома (можно несколько)</h2>
   <input type="text" id="name" placeholder="Ваше имя (обязательно!)" />
-
+  
   <h3>Где находятся дома</h3>
   <div id="house-map"></div>
-
+  
   <div id="houses-container">
-    <p>Загрузка домов...</p>
+    <!-- Дома подгрузятся сюда -->
   </div>
 
   <br><br>
   <button onclick="submitVote()">Проголосовать</button>
-
+  
   <h3>Текущие результаты:</h3>
   <div id="results-container">
     <p>Загрузка результатов...</p>
   </div>
-
+  
   <div id="status"></div>
 
   <script>
-    // 🔴 ОБЯЗАТЕЛЬНО ЗАМЕНИ НА СВОЙ URL ИЗ APPS SCRIPT (БЕЗ ПРОБЕЛОВ!)
+    // 🔴 ОБЯЗАТЕЛЬНО замени на свой URL из Apps Script (без пробелов!)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrMeJhIM7_Hq9viUzcu7KXAGdv1brBFlWfP7Wvmx2a6L71HvpXgmIk06zFruYZBpl-vg/exec";
 
-    // Переменная для хранения карты
-    let map;
+    // ========== ТЁМНЫЙ РЕЖИМ ==========
+    function initThemeToggle() {
+      const toggle = document.getElementById('theme-toggle');
+      const body = document.body;
 
-    // Загрузка домов и карты
+      // Проверяем сохранённую тему или системную
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        body.classList.add('dark-mode');
+        toggle.textContent = '🌞'; // Солнце — выключить тёмный режим
+      } else {
+        toggle.textContent = '🌙'; // Луна — включить тёмный режим
+      }
+
+      toggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        toggle.textContent = isDark ? '🌞' : '🌙';
+      });
+    }
+
+    // ========== ЗАГРУЗКА ДОМОВ И КАРТЫ ==========
     async function loadHouses() {
       try {
         const res = await fetch(`${WEB_APP_URL}?action=getHouses`);
@@ -178,37 +244,47 @@
           return;
         }
 
-        // Отрисовка карточек
-        container.innerHTML = houses.map(h => {
-          const color = h.цвет_маркера || '#888888';
-          return `
-            <label class="house">
-              <input type="checkbox" value="${h.id}">
-              <img src="${h.фото_url}" onerror="this.src='https://via.placeholder.com/300x150?text=Фото+недоступно'">
-              <div style="display: flex; align-items: center; gap: 6px; margin: 6px 0;">
-                <span style="
-                  display: inline-block;
-                  width: 12px;
-                  height: 12px;
-                  border-radius: 50%;
-                  background-color: ${color};
-                  border: 1px solid rgba(0,0,0,0.2);
-                "></span>
-                <strong>${h.название}</strong>
-              </div>
-              <div>💰 Сутки: ${h.цена_сутки || '—'} ₽</div>
-              <div>👨‍👩‍👧‍👦 3 семьи томские: ${h.цена_томские || '—'} ₽</div>
-              <div>👨‍👩‍👧‍👦 1 семья красноярские: ${h.цена_крас || '—'} ₽</div>
-              <div>✨ Особенности: ${h.особенности || ''}</div>
-              <div>🗺️ До горы: ${h.расстояние || '—'} км</div>
-              ${h.авито_ссылка ? `<div><a href="${h.авито_ссылка}" target="_blank" style="color: #0066cc; text-decoration: underline;">🔗 Посмотреть на Авито</a></div>` : ''}
-            </label>
-          `;
-        }).join('');
+        container.innerHTML = houses.map(h => `
+          <label class="house">
+            <input type="checkbox" value="${h.id}">
+            <img src="${h.фото_url}" onerror="this.src='https://via.placeholder.com/300x150?text=Фото+недоступно'">
+            <div><strong>${h.название}</strong></div>
+            <div>💰 Сутки: ${h.цена_сутки || '—'} ₽</div>
+            <div>👨‍👩‍👧‍👦 3 семьи томские: ${h.цена_томские || '—'} ₽</div>
+            <div>👨‍👩‍👧‍👦 1 семья красноярская: ${h.цена_крас || '—'} ₽</div>
+            <div>✨ Особенности: ${h.особенности || ''}</div>
+            <div>🗺️ До горы: ${h.расстояние || '—'} км</div>
+            ${h.авито_ссылка ? `<div><a href="${h.авито_ссылка}" target="_blank" style="color: var(--link); text-decoration: underline;">🔗 Посмотреть на Авито</a></div>` : ''}
+          </label>
+        `).join('');
 
-        // Инициализация карты
-        renderHouseMap(houses);
+        // --- Карта ---
+        if (typeof L !== 'undefined') {
+          const mapContainer = document.getElementById('house-map');
+          if (mapContainer) {
+            mapContainer.innerHTML = '';
+            const map = L.map('house-map').setView([52.943187, 87.977159], 12);
 
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            houses.forEach(house => {
+              if (house.широта && house.долгота) {
+                const lat = parseFloat(house.широта);
+                const lng = parseFloat(house.долгота);
+                if (!isNaN(lat) && !isNaN(lng)) {
+                  const marker = L.marker([lat, lng]).addTo(map);
+                  let popupContent = `<strong>${house.название}</strong>`;
+                  if (house.фото_url) {
+                    popupContent += `<br><img src="${house.фото_url}" width="150" style="border-radius: 6px; margin-top: 6px;">`;
+                  }
+                  marker.bindPopup(popupContent);
+                }
+              }
+            });
+          }
+        }
       } catch (err) {
         console.error("Ошибка загрузки домов:", err);
         document.getElementById("houses-container").innerHTML = 
@@ -216,81 +292,7 @@
       }
     }
 
-    // Карта с маркерами и линейкой
-    function renderHouseMap(houses) {
-      const mapContainer = document.getElementById('house-map');
-      if (!mapContainer) return;
-      mapContainer.innerHTML = '';
-
-      // Создаем карту
-      map = L.map('house-map').setView([52.943187, 87.977159], 12);
-
-      // Добавляем слой карты
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-
-      // Добавляем инструмент измерения по описанию из GitHub
-      map.addControl(new L.Control.LinearMeasurement({
-        position: 'topright',
-        unitSystem: 'metric', // используем метрическую систему вместо imperial
-        color: '#1a73e8', // синий цвет вместо розового
-        type: 'line',
-        // Дополнительные настройки из описания
-        fillColor: '#fff',
-        features: ['line', 'ruler', 'trash'], // оставляем только нужные функции
-        pallette: ['#1a73e8', '#FF0080', 'red', 'blue', 'green', 'orange', 'black'],
-        dashArray: '5, 5',
-        weight: 3,
-        opacity: 1,
-        fillOpacity: 0.5,
-        radius: 4
-      }));
-
-      // Добавляем маркеры домов
-      houses.forEach(house => {
-        if (house.широта && house.долгота) {
-          const lat = parseFloat(house.широта);
-          const lng = parseFloat(house.долгота);
-          if (!isNaN(lat) && !isNaN(lng)) {
-            const color = house.цвет_маркера || '#888888';
-            const marker = L.marker([lat, lng], {
-              icon: L.divIcon({
-                className: 'custom-marker',
-                html: `<div style="
-                  background: ${color};
-                  width: 30px;
-                  height: 40px;
-                  position: relative;
-                  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-                  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-                ">
-                  <div style="
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    color: white;
-                    font-weight: bold;
-                    font-size: 12px;
-                  ">●</div>
-                </div>`,
-                iconSize: [30, 40],
-                iconAnchor: [15, 40]
-              })
-            }).addTo(map);
-
-            let popupContent = `<strong>${house.название}</strong>`;
-            if (house.фото_url) {
-              popupContent += `<br><img src="${house.фото_url}" width="150" style="border-radius: 6px; margin-top: 6px;">`;
-            }
-            marker.bindPopup(popupContent);
-          }
-        }
-      });
-    }
-
-    // Отправка голоса
+    // ========== ОТПРАВКА ГОЛОСА ==========
     async function submitVote() {
       const name = document.getElementById("name").value.trim();
       if (!name) {
@@ -325,7 +327,7 @@
       }
     }
 
-    // Загрузка итогов
+    // ========== ЗАГРУЗКА ИТОГОВ ==========
     async function loadResults() {
       try {
         const res = await fetch(`${WEB_APP_URL}?action=getResults`);
@@ -358,7 +360,8 @@
       }
     }
 
-    // Запуск при загрузке
+    // ========== ЗАПУСК ==========
+    initThemeToggle();
     loadHouses();
     loadResults();
   </script>
