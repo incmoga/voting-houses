@@ -148,15 +148,27 @@
         return;
       }
 
-      container.innerHTML = houses.map(h => `
-        <label class="house">
-          <input type="checkbox" value="${h.id}">
-          <img src="${h.фото_url}" onerror="this.src='https://via.placeholder.com/300x150?text=Фото+недоступно'">
-          <div><strong>${h.название}</strong></div>
+      container.innerHTML = houses.map(h => {
+  const color = h.цвет_маркера || '#888888'; // fallback
+  return `
+    <label class="house">
+      <input type="checkbox" value="${h.id}">
+      <img src="${h.фото_url}" onerror="this.src='https://via.placeholder.com/300x150?text=Фото+недоступно'">
+      <div style="display: flex; align-items: center; gap: 6px; margin: 6px 0;">
+        <span style="
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: ${color};
+          border: 1px solid rgba(0,0,0,0.2);
+        "></span>
+        <strong>${h.название}</strong>
+      </div>
           <div>💰 Сутки: ${h.цена_сутки || '—'} ₽</div>
           <div>👨‍👩‍👧‍👦 3 семьи томские: ${h.цена_томские || '—'} ₽</div>
-          <div>👨‍👩‍👧‍👦 1 семья: ${h.цена_крас || '—'} ₽</div>
-          <div>✨особенности ${h.особенности || ''}</div>
+          <div>👨‍👩‍👧‍👦 1 семья красноярские: ${h.цена_крас || '—'} ₽</div>
+          <div>✨особенности: ${h.особенности || ''}</div>
           <div>🗺️ До горы: ${h.расстояние || '—'} км</div>
           <div><a href="${h.авито_ссылка}" target="_blank" style="color: #0066cc; text-decoration: underline;">🔗 Посмотреть на Авито</a></div>
         </label>
@@ -183,7 +195,34 @@ if (typeof L !== 'undefined') {
         const lng = parseFloat(house.долгота);
         
         if (!isNaN(lat) && !isNaN(lng)) {
-          const marker = L.marker([lat, lng]).addTo(map);
+          const color = house.цвет_маркера || '#888888';
+
+      // Создаём кастомный маркер с цветом
+      const marker = L.marker([lat, lng], {
+        icon: L.divIcon({
+          className: 'custom-marker',
+          html: `<div style="
+            background: ${color};
+            width: 30px;
+            height: 40px;
+            position: relative;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+          ">
+            <div style="
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: white;
+              font-weight: bold;
+              font-size: 12px;
+            ">●</div>
+          </div>`,
+          iconSize: [30, 40],
+          iconAnchor: [15, 40]
+        })
+      }).addTo(map);
           
           // Попап с фото и названием
           let popupContent = `<strong>${house.название}</strong>`;
@@ -273,6 +312,7 @@ loadResults();
 </body>
 
 </html>
+
 
 
 
