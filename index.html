@@ -3,315 +3,317 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAA+vr/ABFmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgICAgICAAAAAAAAAgICAgECAgICAgICAAAAAgICAgIBAgICAgICAgIAAAICAgICAQEBAgICAgICAAICAgICAgECAgECAgECAQICAgICAgIBAgICAQIBAQECAgICAgICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgIBAgICAgICAgICAgICAgICAQEBAgICAgICAgICAgICAgECAgECAgIBAgICAgICAgIBAgICAQIBAgECAgICAAICAQICAQICAQIBAgICAAACAgEBAQICAgIBAgICAgAAAAICAgICAgICAgICAgAAAAAAAAICAgICAgICAAAAAPAPAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAPAPAAA=" rel="icon" type="image/x-icon">
+  <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAA+vr/ABFmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgICAgICAAAAAAAAAgICAgECAgICAgICAAAAAgICAgIBAgICAgICAgIAAAICAgICAQEBAgICAgICAAICAgICAgECAgECAgECAQICAgICAgIBAgICAQIBAQECAgICAgICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgIBAgICAgICAgICAgICAgICAgICAQEBAgICAgICAgICAgICAgECAgECAgIBAgICAgICAgIBAgICAQIBAgECAgICAAICAQICAQICAQIBAgICAgECAgEBAQICAgIBAgICAgAAAAICAgICAgICAgICAgAAAAAAAAICAgICAgICAAAAAPAPAADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAPAPAAA=" rel="icon" type="image/x-icon">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Leaflet Linear Measurement CSS -->
   <title>Выбор дома</title>
   <style>
     body {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    padding: 20px;
-    background: #f5f7fa;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-  }
-  .house {
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 16px;
-    margin: 16px 8px;
-    width: 290px;
-    display: inline-block;
-    vertical-align: top;
-    background: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
-  }
-  .house:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .house img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 12px;
-  }
-  input[type="text"] {
-    padding: 10px;
-    width: 320px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-  button {
-    padding: 12px 24px;
-    font-size: 18px;
-    background: #1a73e8;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #0d5bb8;
-  }
-  #status {
-    margin-top: 20px;
-    font-weight: bold;
-    min-height: 24px;
-  }
-  h2 {
-    color: #202124;
-    margin-bottom: 10px;
-  }
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 20px;
+      background: #f5f7fa;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .house {
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 8px;
+      width: 290px;
+      display: inline-block;
+      vertical-align: top;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+    .house:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .house img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 320px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0d5bb8;
+    }
+    #status {
+      margin-top: 20px;
+      font-weight: bold;
+      min-height: 24px;
+    }
+    h2, h3 {
+      color: #202124;
+      margin: 20px 0 10px;
+    }
 
     .results-box {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  margin-top: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.results-title {
-  font-weight: bold;
-  margin-bottom: 12px;
-  color: #202124;
-}
-
-.result-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
-  color: #333;
-}
-
-.result-count {
-  font-weight: bold;
-  color: #1a73e8;
-}
-  @media (max-width: 600px) {
-  .result-row {
-    flex-direction: column;
-    gap: 4px;
-  }
-  .result-row span:last-child {
-    text-align: right;
-  }
-}
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .results-title {
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #202124;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      color: #333;
+    }
+    .result-count {
+      font-weight: bold;
+      color: #1a73e8;
+    }
+    @media (max-width: 600px) {
+      .result-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .result-row span:last-child {
+        text-align: right;
+      }
+    }
     #house-map {
-    width: 100%;
-    height: 300px;
-    border-radius: 12px;
-    margin: 20px 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
+      width: 100%;
+      height: 350px;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
   </style>
 </head>
 <body>
   <h2>Выберите подходящие дома (можно несколько)</h2>
   <input type="text" id="name" placeholder="Ваше имя (обязательно!)" />
+
   <h3>Где находятся дома</h3>
   <div id="house-map"></div>
+
   <div id="houses-container">
-    <!-- Дома подгрузятся сюда -->
+    <p>Загрузка домов...</p>
   </div>
 
   <br><br>
   <button onclick="submitVote()">Проголосовать</button>
+
   <h3>Текущие результаты:</h3>
-<div id="results-container">
-  <p>Загрузка результатов...</p>
-</div>
+  <div id="results-container">
+    <p>Загрузка результатов...</p>
+  </div>
+
   <div id="status"></div>
 
   <script>
-  // 🔴 УБЕРИ ПРОБЕЛЫ В КОНЦЕ URL!
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrMeJhIM7_Hq9viUzcu7KXAGdv1brBFlWfP7Wvmx2a6L71HvpXgmIk06zFruYZBpl-vg/exec";
+    // 🔴 ОБЯЗАТЕЛЬНО ЗАМЕНИ НА СВОЙ URL ИЗ APPS SCRIPT (БЕЗ ПРОБЕЛОВ!)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwrMeJhIM7_Hq9viUzcu7KXAGdv1brBFlWfP7Wvmx2a6L71HvpXgmIk06zFruYZBpl-vg/exec";
 
-  async function loadHouses() {
-    try {
-      const res = await fetch(`${WEB_APP_URL}?action=getHouses`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const houses = await res.json();
-      
-      const container = document.getElementById("houses-container");
-      if (houses.length === 0) {
-        container.innerHTML = "<p>Нет домов для голосования.</p>";
+    // Загрузка домов и карты
+    async function loadHouses() {
+      try {
+        const res = await fetch(`${WEB_APP_URL}?action=getHouses`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const houses = await res.json();
+        
+        const container = document.getElementById("houses-container");
+        if (houses.length === 0) {
+          container.innerHTML = "<p>Нет домов для голосования.</p>";
+          return;
+        }
+
+        // Отрисовка карточек
+        container.innerHTML = houses.map(h => {
+          const color = h.цвет_маркера || '#888888';
+          return `
+            <label class="house">
+              <input type="checkbox" value="${h.id}">
+              <img src="${h.фото_url}" onerror="this.src='https://via.placeholder.com/300x150?text=Фото+недоступно'">
+              <div style="display: flex; align-items: center; gap: 6px; margin: 6px 0;">
+                <span style="
+                  display: inline-block;
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background-color: ${color};
+                  border: 1px solid rgba(0,0,0,0.2);
+                "></span>
+                <strong>${h.название}</strong>
+              </div>
+              <div>💰 Сутки: ${h.цена_сутки || '—'} ₽</div>
+              <div>👨‍👩‍👧‍👦 3 семьи томские: ${h.цена_томские || '—'} ₽</div>
+              <div>👨‍👩‍👧‍👦 1 семья красноярские: ${h.цена_крас || '—'} ₽</div>
+              <div>✨ Особенности: ${h.особенности || ''}</div>
+              <div>🗺️ До горы: ${h.расстояние || '—'} км</div>
+              ${h.авито_ссылка ? `<div><a href="${h.авито_ссылка}" target="_blank" style="color: #0066cc; text-decoration: underline;">🔗 Посмотреть на Авито</a></div>` : ''}
+            </label>
+          `;
+        }).join('');
+
+        // Инициализация карты
+        renderHouseMap(houses);
+
+      } catch (err) {
+        console.error("Ошибка загрузки домов:", err);
+        document.getElementById("houses-container").innerHTML = 
+          `<p style="color:red">❌ Ошибка: ${err.message}</p>`;
+      }
+    }
+
+    // Карта с маркерами
+    function renderHouseMap(houses) {
+      const mapContainer = document.getElementById('house-map');
+      if (!mapContainer) return;
+      mapContainer.innerHTML = '';
+
+      const map = L.map('house-map').setView([52.943187, 87.977159], 12);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      houses.forEach(house => {
+        if (house.широта && house.долгота) {
+          const lat = parseFloat(house.широта);
+          const lng = parseFloat(house.долгота);
+          if (!isNaN(lat) && !isNaN(lng)) {
+            const color = house.цвет_маркера || '#888888';
+            const marker = L.marker([lat, lng], {
+              icon: L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="
+                  background: ${color};
+                  width: 30px;
+                  height: 40px;
+                  position: relative;
+                  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+                  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                ">
+                  <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: white;
+                    font-weight: bold;
+                    font-size: 12px;
+                  ">●</div>
+                </div>`,
+                iconSize: [30, 40],
+                iconAnchor: [15, 40]
+              })
+            }).addTo(map);
+
+            let popupContent = `<strong>${house.название}</strong>`;
+            if (house.фото_url) {
+              popupContent += `<br><img src="${house.фото_url}" width="150" style="border-radius: 6px; margin-top: 6px;">`;
+            }
+            marker.bindPopup(popupContent);
+          }
+        }
+      });
+    }
+
+    // Отправка голоса
+    async function submitVote() {
+      const name = document.getElementById("name").value.trim();
+      if (!name) {
+        alert("Пожалуйста, укажите имя!");
+        return;
+      }
+      const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+        .map(el => el.value);
+
+      if (checked.length === 0) {
+        alert("Выберите хотя бы один дом!");
         return;
       }
 
-      container.innerHTML = houses.map(h => {
-  const color = h.цвет_маркера || '#888888'; // fallback
-  return `
-    <label class="house">
-      <input type="checkbox" value="${h.id}">
-      <img src="${h.фото_url}" onerror="this.src='https://via.placeholder.com/300x150?text=Фото+недоступно'">
-      <div style="display: flex; align-items: center; gap: 6px; margin: 6px 0;">
-        <span style="
-          display: inline-block;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background-color: ${color};
-          border: 1px solid rgba(0,0,0,0.2);
-        "></span>
-        <strong>${h.название}</strong>
-      </div>
-          <div>💰 Сутки: ${h.цена_сутки || '—'} ₽</div>
-          <div>👨‍👩‍👧‍👦 3 семьи томские: ${h.цена_томские || '—'} ₽</div>
-          <div>👨‍👩‍👧‍👦 1 семья красноярские: ${h.цена_крас || '—'} ₽</div>
-          <div>✨особенности: ${h.особенности || ''}</div>
-          <div>🗺️ До горы: ${h.расстояние || '—'} км</div>
-          <div><a href="${h.авито_ссылка}" target="_blank" style="color: #0066cc; text-decoration: underline;">🔗 Посмотреть на Авито</a></div>
-        </label>
-      `).join('');
-      // --- Карта ---
-if (typeof L !== 'undefined') {
-  const mapContainer = document.getElementById('house-map');
-  if (mapContainer) {
-    // Очистим карту, если уже была
-    mapContainer.innerHTML = '';
+      const housesParam = encodeURIComponent(checked.join(","));
+      const url = `${WEB_APP_URL}?action=vote&name=${encodeURIComponent(name)}&houses=${housesParam}`;
 
-    // Создаём карту
-    const map = L.map('house-map').setView([52.943187, 87.977159], 12); //52.943187, 87.977159 центр — твой регион
-
-    // Подложка OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    // Добавляем маркеры
-    houses.forEach(house => {
-      if (house.широта && house.долгота) {
-        const lat = parseFloat(house.широта);
-        const lng = parseFloat(house.долгота);
-        
-        if (!isNaN(lat) && !isNaN(lng)) {
-          const color = house.цвет_маркера || '#888888';
-
-      // Создаём кастомный маркер с цветом
-      const marker = L.marker([lat, lng], {
-        icon: L.divIcon({
-          className: 'custom-marker',
-          html: `<div style="
-            background: ${color};
-            width: 30px;
-            height: 40px;
-            position: relative;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-          ">
-            <div style="
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: white;
-              font-weight: bold;
-              font-size: 12px;
-            ">●</div>
-          </div>`,
-          iconSize: [30, 40],
-          iconAnchor: [15, 40]
-        })
-      }).addTo(map);
-          
-          // Попап с фото и названием
-          let popupContent = `<strong>${house.название}</strong>`;
-          if (house.фото_url) {
-            popupContent += `<br><img src="${house.фото_url}" width="150" style="border-radius: 6px; margin-top: 6px;">`;
-          }
-          marker.bindPopup(popupContent);
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const result = await res.json();
+        if (result.status === "ok") {
+          document.getElementById("status").innerText = "✅ Голос принят! Спасибо!";
+          loadResults();
+          document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+        } else {
+          throw new Error("Сервер вернул ошибку");
         }
+      } catch (err) {
+        document.getElementById("status").innerText = `❌ Ошибка: ${err.message}`;
+        console.error(err);
       }
-    });
-  }
-}
-    } catch (err) {
-      console.error("Ошибка загрузки домов:", err);
-      document.getElementById("houses-container").innerHTML = 
-        `<p style="color:red">❌ Ошибка: ${err.message}</p>`;
-    }
-  }
-
-  async function submitVote() {
-    const name = document.getElementById("name").value.trim() || "Аноним";
-    const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
-      .map(el => el.value);
-
-    if (checked.length === 0) {
-      alert("Выберите хотя бы один дом!");
-      return;
     }
 
-    const housesParam = encodeURIComponent(checked.join(","));
-    const url = `${WEB_APP_URL}?action=vote&name=${encodeURIComponent(name)}&houses=${housesParam}`;
-
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const result = await res.json();
-      if (result.status === "ok") {
-        document.getElementById("status").innerText = "✅ Голос принят! Спасибо!";
-        loadResults();
-        document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
-      } else {
-        throw new Error("Сервер вернул ошибку");
-      }
-    } catch (err) {
-      document.getElementById("status").innerText = `❌ Ошибка: ${err.message}`;
-      console.error(err);
-    }
-  }
-
-  loadHouses();
+    // Загрузка итогов
     async function loadResults() {
-  try {
-    const res = await fetch(`${WEB_APP_URL}?action=getResults`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const results = await res.json();
+      try {
+        const res = await fetch(`${WEB_APP_URL}?action=getResults`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const results = await res.json();
 
-    const container = document.getElementById("results-container");
-    if (results.length === 0) {
-      container.innerHTML = "<p>Пока нет голосов.</p>";
-      return;
+        const container = document.getElementById("results-container");
+        if (results.length === 0) {
+          container.innerHTML = "<p>Пока нет голосов.</p>";
+          return;
+        }
+
+        results.sort((a, b) => b.голосов - a.голосов);
+
+        container.innerHTML = `
+          <div class="results-box">
+            <div class="results-title">Рейтинг домов</div>
+            ${results.map(r => `
+              <div class="result-row">
+                <span>${r.название}</span>
+                <span class="result-count">${r.голосов} ${r.голосов === 1 ? 'голос' : r.голосов < 5 ? 'голоса' : 'голосов'}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } catch (err) {
+        console.error("Ошибка загрузки итогов:", err);
+        document.getElementById("results-container").innerHTML = 
+          `<p style="color:red">❌ Не удалось загрузить итоги</p>`;
+      }
     }
 
-    // Сортируем по убыванию голосов
-    results.sort((a, b) => b.голосов - a.голосов);
-
-    container.innerHTML = `
-  <div class="results-box">
-    <div class="results-title">Рейтинг домов</div>
-    ${results.map(r => `
-      <div class="result-row">
-        <span>${r.название}</span>
-        <span class="result-count">${r.голосов} ${r.голосов === 1 ? 'голос' : r.голосов < 5 ? 'голоса' : 'голосов'}</span>
-      </div>
-    `).join('')}
-  </div>
-`;
-  } catch (err) {
-    console.error("Ошибка загрузки итогов:", err);
-    document.getElementById("results-container").innerHTML = 
-      `<p style="color:red">❌ Не удалось загрузить итоги</p>`;
-  }
-}
-
-// Загружаем итоги при старте и после голосования
-loadResults();
-</script>
+    // Запуск при загрузке
+    loadHouses();
+    loadResults();
+  </script>
 </body>
-
 </html>
+
 
 
 
